@@ -3,7 +3,7 @@ import React from 'react'
 export default function Total(props) {
     return (
         <p>
-            Numbers of exercises: {props.exercises1 + props.exercises2 + props.exercises3}  
+            Numbers of exercises: {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}  
         </p>
     )
 }

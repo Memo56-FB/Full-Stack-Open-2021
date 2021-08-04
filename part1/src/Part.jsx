@@ -3,7 +3,7 @@ import React from 'react'
 export default function Part(props) {
     return (
         <p>
-            {props.name}: {props.exercises}  
+            {props.parts.name}: {props.parts.exercises}  
         </p>
     )
 }
