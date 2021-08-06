@@ -2,6 +2,14 @@ import React from 'react'
 
 export const Statistics = (props) => {
     const {good,neutral,bad,all,average} = props;
+    if(all <= 0 ){
+        return(
+            <>
+                <h2>Statistics</h2>
+                <p>No Feedback Given </p>
+            </>
+        )
+    }
     return (
         <>
             <h2>Statistics</h2>
