@@ -7,6 +7,8 @@ const App = (props) => {
   const points = new Array(6).fill(0)
   const [vote, setVote] = useState(points)
   const copy = [...vote]
+  let maxNumber = Math.max(...vote)
+  let popularAnecdote;
   const handleNewAnecdoteClick = ()=>{
     setSelected(Math.floor(Math.random()*(6-0)))
   }
@@ -14,14 +16,25 @@ const App = (props) => {
   const handleVoteClick = ()=>{
     copy[selected] += 1;
     setVote(copy)
-    console.log(vote)
+  }
+  for(let x = 0; x < vote.length ; x++){
+    if(vote[x] === maxNumber){
+      popularAnecdote = x
+    }
   }
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <p>{props.anecdotes[selected]}</p>
       <p>Has {vote[selected]} votes</p>
       <button onClick={handleNewAnecdoteClick}>New Anecdote</button>
       <button onClick={handleVoteClick}>Vote</button>
+      <h1>Anecdote with most votes</h1>
+      {maxNumber <= 0 ? <p>Vote for some anecdote</p> : 
+      <>
+        <p>{props.anecdotes[popularAnecdote]}</p>
+        <p>Has {vote[popularAnecdote]} votes</p>
+      </>}
     </>
   )
 }
