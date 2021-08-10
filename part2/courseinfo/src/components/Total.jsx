@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function Total(props) {
+export default function Total({parts}) {
     return (
         <p>
-            Numbers of exercises: {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}  
+            <strong>
+                Total of exercises: {parts[0].exercises + parts[1].exercises + parts[2].exercises}  
+            </strong>
         </p>
     )
 }
