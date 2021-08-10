@@ -1,10 +1,11 @@
 import React from 'react'
 
 export default function Total({parts}) {
+    const totalExercises = parts.reduce((sum, part) => sum + part.exercises,0)
     return (
         <p>
             <strong>
-                Total of exercises: {parts[0].exercises + parts[1].exercises + parts[2].exercises}  
+                Total of exercises: {totalExercises}  
             </strong>
         </p>
     )
