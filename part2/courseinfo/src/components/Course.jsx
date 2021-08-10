@@ -13,3 +13,4 @@ export default function Course({course}) {
         </>
     )
 }
+//i guess this is the exercise 2.5
