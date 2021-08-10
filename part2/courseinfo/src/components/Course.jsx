@@ -8,7 +8,7 @@ export default function Course({course}) {
     return (
         <>
             <Header course={course}/>
-            <Content course={course}/>  
+            <Content courses={course}/>  
             <Total parts={course.parts} /> 
         </>
     )
