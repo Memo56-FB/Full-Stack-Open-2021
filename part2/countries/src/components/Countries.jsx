@@ -1,7 +1,8 @@
 import React from 'react'
+import CountryInf from './CountryInf'
+import ShowCountry from './ShowCountry'
 
 export default function Countries({countries,search}) {
-    
     const copyCountries = countries.filter(country => {
         if(search !== '' && country.name.toLocaleLowerCase().indexOf(search.toLocaleLowerCase())=== -1){
             return null
@@ -20,18 +21,9 @@ export default function Countries({countries,search}) {
                 ? <p>Too many matches, specify another filter</p>
                 : copyCountries.map(country => {
                     if(copyCountries.length === 1){
-                        return( 
-                            <React.Fragment key={country.name}>
-                                <h2>{country.name}</h2>
-                                <p>Capital: {country.capital}</p>
-                                <p>Population: {country.population}</p>
-                                <h3>Languages</h3>
-                                {country.languages.map(language => <p key={language.nativeName}>{language.name}</p>)}
-                                <img width="200px" src={country.flag} alt={country.name} />
-                            </React.Fragment>
-                        )
+                        return <CountryInf key={country.name} country={country} />
                     }
-                return <p key={country.alpha3Code}>{country.name}</p>
+                return<ShowCountry key={country.name} country={country} />
                 })
             }
             {copyCountries.length === 0 && <p>nothing found...</p>}
