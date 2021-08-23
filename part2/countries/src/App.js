@@ -20,6 +20,7 @@ function App() {
       <Countries countries={countries} search={search} />
     </main>
   );
+  
 }
 
 export default App;
