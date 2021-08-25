@@ -11,6 +11,19 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchName, setSearchName] = useState('')
 
+  const updateNumber = id => {
+    const person = persons.find(p => p.id === id)
+    const changedPerson = {...person, number: newNumber}
+
+    personService
+      .updatePerson(person.id,changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+    })
+    setNewName('')
+    setNewNumber('')
+  }
+
   const handleChangeName = (e)=>{
     setNewName(e.target.value)
   }
@@ -24,13 +37,18 @@ const App = () => {
 
   const handleSubmit = (e)=>{
     let added = false
+    let update
     e.preventDefault()
     for (let person of persons){
       if(newName === person.name){
-        alert(`${newName} is already added to phonebook`)
-        setNewNumber('')
-        setNewName('')
-        return added = true
+        update = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+        if(update){
+          return updateNumber(person.id)
+        }else{
+          setNewNumber('')
+          setNewName('')
+          return added = true
+        }
       }
     }
     if(added === false){
