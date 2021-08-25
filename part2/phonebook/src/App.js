@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import axios from 'axios'
 
 import personService from './services/persons'
 import Filter from './components/Filter'
@@ -24,25 +23,25 @@ const App = () => {
   }
 
   const handleSubmit = (e)=>{
+    let added = false
     e.preventDefault()
     for (let person of persons){
       if(newName === person.name){
         alert(`${newName} is already added to phonebook`)
-        setPersons(persons)
         setNewNumber('')
         setNewName('')
-        break
-      }else{
-        const newPersonObj = {name: newName,number: newNumber}
-        personService
-          .createPerson(newPersonObj)
-          .then(response => {
-            setPersons(persons.concat(response))
-            setNewNumber('')
-            setNewName('')
-          })
-        break
+        return added = true
       }
+    }
+    if(added === false){
+    const newPersonObj = {name: newName,number: newNumber}
+      personService
+        .createPerson(newPersonObj)
+        .then(response => {
+          setPersons(persons.concat(response))
+          setNewNumber('')
+          setNewName('')
+        })
     }
   }
 
