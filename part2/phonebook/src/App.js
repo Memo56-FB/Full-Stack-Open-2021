@@ -10,6 +10,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchName, setSearchName] = useState('')
+  const [messageAdded, setMessageAdded] = useState(null)
+  const [messageNumber, setMessageNumber] = useState(null)
 
   const updateNumber = id => {
     const person = persons.find(p => p.id === id)
@@ -19,9 +21,14 @@ const App = () => {
       .updatePerson(person.id,changedPerson)
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+        setNewName('')
+        setNewNumber('')
+        setMessageNumber(`Number of ${returnedPerson.name} was changed to: ${returnedPerson.number}`)
+        setTimeout(()=>{
+          setMessageNumber(null)
+        },5000)
     })
-    setNewName('')
-    setNewNumber('')
+    
   }
 
   const handleChangeName = (e)=>{
@@ -59,6 +66,10 @@ const App = () => {
           setPersons(persons.concat(response))
           setNewNumber('')
           setNewName('')
+          setMessageAdded(`${response.name} was added`)
+          setTimeout(()=>{
+            setMessageAdded(null)
+          },5000)
         })
     }
   }
@@ -68,7 +79,6 @@ const App = () => {
       .getPersons()
       .then(personsReturned => setPersons(personsReturned))
   },[])
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -80,7 +90,9 @@ const App = () => {
         handleChangeName={handleChangeName}
         newNumber={newNumber}
         handleChangeNumber={handleChangeNumber}
-      />
+        />
+        {messageAdded && <h2 className="successful-message">{messageAdded}</h2>}
+        {messageNumber && <h2 className="successful-message">{messageNumber}</h2>}
       <h2>Numbers</h2>
       <Persons persons={persons} setPersons={setPersons} searchName={searchName} />
     </div>
