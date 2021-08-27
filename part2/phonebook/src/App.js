@@ -12,6 +12,7 @@ const App = () => {
   const [searchName, setSearchName] = useState('')
   const [messageAdded, setMessageAdded] = useState(null)
   const [messageNumber, setMessageNumber] = useState(null)
+  const [messageErrorAdded, setMessageErrorAdded] = useState(null)
 
   const updateNumber = id => {
     const person = persons.find(p => p.id === id)
@@ -93,8 +94,9 @@ const App = () => {
         />
         {messageAdded && <h2 className="successful-message">{messageAdded}</h2>}
         {messageNumber && <h2 className="successful-message">{messageNumber}</h2>}
+        {messageErrorAdded && <h2 className="error-message">{messageErrorAdded}</h2>}
       <h2>Numbers</h2>
-      <Persons persons={persons} setPersons={setPersons} searchName={searchName} />
+      <Persons persons={persons} setPersons={setPersons} setMessageErrorAdded={setMessageErrorAdded} searchName={searchName} />
     </div>
   )
 }
