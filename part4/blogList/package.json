@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
   },
   "keywords": [],
   "author": "Guillermo Farfan <memo56_fb@hotmail.com>",
@@ -16,6 +17,10 @@
     "mongoose": "^5.13.8"
   },
   "devDependencies": {
+    "jest": "^27.1.0",
     "nodemon": "^2.0.12"
+  },
+  "jest":{
+    "testEnvironment":"node"
   }
 }
