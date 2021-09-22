@@ -36,11 +36,21 @@ describe('api proofs', () => {
         url: 'https://Blog/guillermo-blog-Jest',
         likes: 53235
       })
-      .expect(200, /GuillermoJest/)
+      .expect(201, /GuillermoJest/)
       .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(initialBlogs.length + 1)
+  })
+  test('post with no likes must be 0', async () => {
+    await api
+      .post('/api/blogs')
+      .send({
+        title: 'Desencuentro',
+        author: 'Residente',
+        url: 'https://open.spotify.com/track/0kc4G5tEdtmTB0w3gYmb01?si=e1f189604e894f40'
+      })
+      .expect(201, /"likes":0/)
   })
 })
 
