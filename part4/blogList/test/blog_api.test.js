@@ -52,6 +52,14 @@ describe('api proofs', () => {
       })
       .expect(201, /"likes":0/)
   })
+  test('post with no title and url return 400', async () => {
+    await api
+      .post('/api/blogs')
+      .send({
+        author: 'Residente'
+      })
+      .expect(400, { error: 'content missing' })
+  })
 })
 
 afterAll(() => {
