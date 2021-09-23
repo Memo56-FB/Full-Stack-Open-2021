@@ -64,12 +64,22 @@ describe('api proofs', () => {
     })
   })
   describe('Delete /api/blogs/:id', () => {
-    test('delete a blog succesful', async () => {
+    test('delete a blog successful', async () => {
       const response = await api.get('/api/blogs')
       const blogToDelete = response.body[0]
       await api
         .delete(`/api/blogs/${blogToDelete.id}`)
         .expect(204)
+    })
+  })
+  describe('Put /api/blogs/:id', () => {
+    test('update likes successful', async () => {
+      const response = await api.get('/api/blogs')
+      const blogToUpdate = response.body[0]
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send({ likes: 123 })
+        .expect(200, /"likes":123/)
     })
   })
 })
