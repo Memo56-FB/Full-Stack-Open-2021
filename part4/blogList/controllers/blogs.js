@@ -6,6 +6,16 @@ blogsRouter.get('/', async (_request, response) => {
   response.status(200).json(blogs)
 })
 
+blogsRouter.get('/:id', async (request, response, next) => {
+  const { id } = request.params
+  try {
+    const blogReturned = await Blog.findById(id)
+    !blogReturned ? response.status(404).json({ error: 'there\'s not a blog' }).end() : response.status(200).json(blogReturned).end()
+  } catch (error) {
+    next(error)
+  }
+})
+
 blogsRouter.post('/', async (request, response) => {
   const blog = await new Blog(request.body)
   if (!blog.title || !blog.url) {
@@ -13,6 +23,16 @@ blogsRouter.post('/', async (request, response) => {
   } else {
     blog.save()
     response.status(201).json(blog.toJSON())
+  }
+})
+
+blogsRouter.delete('/:id', async (request, response, next) => {
+  const { id } = request.params
+  try {
+    await Blog.findByIdAndRemove(id)
+    response.status(204).end()
+  } catch (error) {
+    next(error)
   }
 })
 

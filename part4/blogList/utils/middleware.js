@@ -7,12 +7,10 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
-
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message)
+  logger.info('!!==================!!')
+  logger.error('Error Name:', error.name)
+  logger.info('!!==================!!')
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
@@ -21,6 +19,9 @@ const errorHandler = (error, request, response, next) => {
   }
 
   next(error)
+}
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
 }
 
 module.exports = {
