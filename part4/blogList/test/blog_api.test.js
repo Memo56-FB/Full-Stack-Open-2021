@@ -16,49 +16,61 @@ beforeEach(async () => {
   }
 })
 describe('api proofs', () => {
-  test('notes are returned as json', async () => {
-    await api
-      .get('/api/blogs')
-      .expect(200)
-      .expect('Content-Type', /json/)
+  describe('Get /api/blogs', () => {
+    test('notes are returned as json', async () => {
+      await api
+        .get('/api/blogs')
+        .expect(200)
+        .expect('Content-Type', /json/)
+    })
+    test('contain id', async () => {
+      const response = await api.get('/api/blogs')
+      expect(response.body.map(body => body.id)).toBeDefined()
+    })
   })
-  test('contain id', async () => {
-    const response = await api.get('/api/blogs')
-    expect(response.body.map(body => body.id)).toBeDefined()
-  })
+  describe('Post /api/blogs', () => {
+    test('post method', async () => {
+      await api
+        .post('/api/blogs')
+        .send({
+          title: 'pruebaDesdeJest',
+          author: 'GuillermoJest',
+          url: 'https://Blog/guillermo-blog-Jest',
+          likes: 53235
+        })
+        .expect(201, /GuillermoJest/)
+        .expect('Content-Type', /application\/json/)
 
-  test('post method', async () => {
-    await api
-      .post('/api/blogs')
-      .send({
-        title: 'pruebaDesdeJest',
-        author: 'GuillermoJest',
-        url: 'https://Blog/guillermo-blog-Jest',
-        likes: 53235
-      })
-      .expect(201, /GuillermoJest/)
-      .expect('Content-Type', /application\/json/)
-
-    const response = await api.get('/api/blogs')
-    expect(response.body).toHaveLength(initialBlogs.length + 1)
+      const response = await api.get('/api/blogs')
+      expect(response.body).toHaveLength(initialBlogs.length + 1)
+    })
+    test('post with no likes must be 0', async () => {
+      await api
+        .post('/api/blogs')
+        .send({
+          title: 'Desencuentro',
+          author: 'Residente',
+          url: 'https://open.spotify.com/track/0kc4G5tEdtmTB0w3gYmb01?si=e1f189604e894f40'
+        })
+        .expect(201, /"likes":0/)
+    })
+    test('post with no title and url return 400', async () => {
+      await api
+        .post('/api/blogs')
+        .send({
+          author: 'Residente'
+        })
+        .expect(400, { error: 'content missing' })
+    })
   })
-  test('post with no likes must be 0', async () => {
-    await api
-      .post('/api/blogs')
-      .send({
-        title: 'Desencuentro',
-        author: 'Residente',
-        url: 'https://open.spotify.com/track/0kc4G5tEdtmTB0w3gYmb01?si=e1f189604e894f40'
-      })
-      .expect(201, /"likes":0/)
-  })
-  test('post with no title and url return 400', async () => {
-    await api
-      .post('/api/blogs')
-      .send({
-        author: 'Residente'
-      })
-      .expect(400, { error: 'content missing' })
+  describe('Delete /api/blogs/:id', () => {
+    test('delete a blog succesful', async () => {
+      const response = await api.get('/api/blogs')
+      const blogToDelete = response.body[0]
+      await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+    })
   })
 })
 
