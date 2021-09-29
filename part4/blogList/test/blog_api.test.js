@@ -1,7 +1,7 @@
 const app = require('../app')
 const { server } = require('../index')
 const Blog = require('../models/blog')
-const initialBlogs = require('./helpers')
+const initialBlogs = require('../utils/blog_helper')
 
 const mongoose = require('mongoose')
 const supertest = require('supertest')
