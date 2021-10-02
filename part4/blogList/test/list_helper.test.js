@@ -83,4 +83,10 @@ describe('total likes', () => {
       likes: 12
     })
   })
+  test('Most Blogs', () => {
+    const result = mostBlogs(blogs)
+    expect(result[result.length - 1]).toEqual({
+      author: 'Robert C. Martin', blogs: 3
+    })
+  })
 })

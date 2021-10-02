@@ -27,7 +27,15 @@ const favoriteBlog = blogs => {
   }
   return finalResult
 }
-const mostBlogs = blogs => {}
+const mostBlogs = blogs => {
+  return _(blogs)
+    .countBy('author')
+    .map((blogs, author) => {
+      return { author, blogs }
+    })
+    .sortBy('blogs')
+    .value()
+}
 
 module.exports = {
   dummy,
