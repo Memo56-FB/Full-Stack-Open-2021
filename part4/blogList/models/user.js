@@ -4,10 +4,17 @@ const mongooseUniqueValidator = require('mongoose-unique-validator')
 const userEschema = new Schema({
   username: {
     type: String,
-    unique: true
+    unique: true,
+    minlength: 3,
+    required: true
   },
+
   name: String,
-  passWordhash: String
+
+  passWordhash: {
+    type: String,
+    required: true
+  }
 })
 
 userEschema.set('toJSON', {
