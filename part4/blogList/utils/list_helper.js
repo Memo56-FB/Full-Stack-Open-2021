@@ -36,10 +36,30 @@ const mostBlogs = blogs => {
     .sortBy('blogs')
     .value()
 }
+const mostLikes = blogs => {
+  let prevName = blogs[0].author
+  let likes = 0
+  blogs.push({ author: 'x' })
+  const arraySumLikes = []
+  for (const blog in blogs) {
+    if (prevName === blogs[blog].author) {
+      likes += blogs[blog].likes
+    } else {
+      arraySumLikes.push({
+        author: prevName,
+        likes: likes
+      })
+      likes = blogs[blog].likes
+      prevName = blogs[blog].author
+    }
+  }
+  return _(arraySumLikes).sortBy('likes').value()
+}
 
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
