@@ -14,7 +14,12 @@ const userEschema = new Schema({
   passWordhash: {
     type: String,
     required: true
-  }
+  },
+
+  blogs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Blog'
+  }]
 })
 
 userEschema.set('toJSON', {
