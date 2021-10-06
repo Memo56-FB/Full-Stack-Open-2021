@@ -59,7 +59,7 @@ blogsRouter.put('/:id', async (request, response, next) => {
   }
 })
 
-blogsRouter.delete('/:id', async (request, response, next) => {
+blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
   const { id } = request.params
   try {
     await Blog.findByIdAndRemove(id)
