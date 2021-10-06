@@ -1,3 +1,4 @@
+const { api } = require('./user_helper')
 const initialBlogs = [
   {
     title: 'blogDesdeJest1',
@@ -19,4 +20,12 @@ const initialBlogs = [
   }
 ]
 
-module.exports = initialBlogs
+const getToken = async () => {
+  const response = await api.post('/api/login').send({ username: 'MemoRoot', password: 'contraseñaSegura' })
+  return response.body.token
+}
+
+module.exports = {
+  initialBlogs,
+  getToken
+}

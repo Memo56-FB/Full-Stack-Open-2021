@@ -1,7 +1,8 @@
 const app = require('../app')
 const { server } = require('../index')
 const Blog = require('../models/blog')
-const initialBlogs = require('../utils/blog_helper')
+const { initialBlogs } = require('../utils/blog_helper')
+const { getToken } = require('../utils/blog_helper')
 
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -30,8 +31,10 @@ describe('api proofs', () => {
   })
   describe('Post /api/blogs', () => {
     test('post method', async () => {
+      const token = await getToken()
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send({
           title: 'pruebaDesdeJest',
           author: 'GuillermoJest',
@@ -45,8 +48,10 @@ describe('api proofs', () => {
       expect(response.body).toHaveLength(initialBlogs.length + 1)
     })
     test('post with no likes must be 0', async () => {
+      const token = await getToken()
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send({
           title: 'Desencuentro',
           author: 'Residente',
@@ -55,8 +60,10 @@ describe('api proofs', () => {
         .expect(201, /"likes":0/)
     })
     test('post with no title and url return 400', async () => {
+      const token = await getToken()
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send({
           author: 'Residente'
         })
@@ -67,8 +74,10 @@ describe('api proofs', () => {
     test('delete a blog successful', async () => {
       const response = await api.get('/api/blogs')
       const blogToDelete = response.body[0]
+      const token = await getToken()
       await api
         .delete(`/api/blogs/${blogToDelete.id}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
     })
   })
