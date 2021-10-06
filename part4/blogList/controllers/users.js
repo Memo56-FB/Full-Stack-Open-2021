@@ -21,15 +21,15 @@ userRouter.get('/', async (req, res, next) => {
 userRouter.post('/', async (req, res, next) => {
   try {
     const { username, name, password } = req.body
-    let passWordhash
+    let passwordHash
     password.length < 3
       ? res.status(400).json({ error: 'Minimum length of password must be three' })
-      : passWordhash = await bcrypt.hash(password, 10)
+      : passwordHash = await bcrypt.hash(password, 10)
 
     const user = new User({
       username,
       name,
-      passWordhash
+      passwordHash
     })
 
     const savedUser = await user.save()

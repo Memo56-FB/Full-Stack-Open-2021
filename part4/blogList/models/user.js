@@ -11,7 +11,7 @@ const userEschema = new Schema({
 
   name: String,
 
-  passWordhash: {
+  passwordHash: {
     type: String,
     required: true
   },
@@ -28,7 +28,7 @@ userEschema.set('toJSON', {
     delete returnedObj._id
     delete returnedObj.__v
 
-    delete returnedObj.passWordhash
+    delete returnedObj.passwordHash
   }
 })
 
