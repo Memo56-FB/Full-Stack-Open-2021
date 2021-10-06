@@ -69,6 +69,16 @@ describe('api proofs', () => {
         })
         .expect(400, { error: 'content missing' })
     })
+    test('post without token return 401', async () => {
+      await api
+        .post('/api/blogs')
+        .send({
+          title: '¿Y la felicidad que?',
+          author: 'Cansebero',
+          url: 'https://open.spotify.com/track/24HYU0MQmeUQ6YLjl1o2NV?si=574d175332e94a97'
+        })
+        .expect(401, /token missing or invalid/)
+    })
   })
   describe('Delete /api/blogs/:id', () => {
     test('delete a blog successful', async () => {
