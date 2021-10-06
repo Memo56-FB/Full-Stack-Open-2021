@@ -2,6 +2,7 @@ const blogsRouter = require('express').Router()
 
 const Blog = require('../models/blog')
 const { User } = require('../models/user')
+const { userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (_request, response) => {
   const blogs = await Blog.find({}).populate('user', {
@@ -22,8 +23,9 @@ blogsRouter.get('/:id', async (request, response, next) => {
   }
 })
 
-blogsRouter.post('/', async (request, response) => {
-  const { userId, title, author, url, likes } = request.body
+blogsRouter.post('/', userExtractor, async (request, response) => {
+  const { title, author, url, likes } = request.body
+  const { userId } = request
   const user = await User.findById(userId)
 
   if (!title || !url) {
