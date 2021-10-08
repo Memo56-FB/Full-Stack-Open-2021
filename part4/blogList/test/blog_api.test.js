@@ -1,6 +1,6 @@
 const app = require('../app')
 const { server } = require('../index')
-const Blog = require('../models/blog')
+const { Blog } = require('../models/blog')
 const { initialBlogs } = require('../utils/blog_helper')
 const { getToken } = require('../utils/blog_helper')
 
